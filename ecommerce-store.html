@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Computer Gear Store</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Segoe UI, system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial;color:#e2e8f0;background:linear-gradient(180deg,#040912 0%,#081026 100%);padding:0}
+    header{position:sticky;top:0;background:rgba(8,12,24,0.8);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    nav{max-width:1100px;margin:0 auto;padding:0.8rem 1rem;display:flex;justify-content:space-between;align-items:center}
+    .logo{color:#8b75f9;font-weight:700}
+    .link-back{color:#d8b4fe;text-decoration:none;border:1px solid rgba(255,255,255,0.06);padding:0.45rem 0.8rem;border-radius:999px}
+    main{max-width:1100px;margin:2.4rem auto;padding:0 1rem}
+    .hero{background:rgba(12,18,30,0.9);padding:1.4rem;border-radius:14px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 18px 40px rgba(0,0,0,0.45)}
+    .hero h1{font-size:clamp(1.6rem,3.8vw,2.4rem)}
+    .hero p{color:#b8c6da;margin-top:0.5rem}
+    .chip{display:inline-block;margin-top:0.6rem;background:rgba(99,102,241,0.12);color:#c7d2fe;padding:0.35rem 0.6rem;border-radius:999px;font-size:0.85rem}
+
+    .category-menu{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1rem 0}
+    .category-button{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#cbd5e1;padding:0.45rem 0.8rem;border-radius:999px;cursor:pointer;font-weight:600}
+    .category-button.active{background:linear-gradient(90deg,rgba(79,70,229,0.16),rgba(107,77,214,0.08));color:#fff;border-color:rgba(79,70,229,0.26)}
+
+    .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+    .product-card{background:rgba(10,14,24,0.9);border-radius:12px;padding:1rem;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 30px rgba(0,0,0,0.35)}
+    .product-image{aspect-ratio:16/9;min-height:120px;overflow:hidden;border-radius:10px;background:linear-gradient(135deg,rgba(79,70,229,0.08),rgba(20,184,166,0.06));display:block;margin-bottom:0.8rem}
+    .product-image img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
+    .product-card h3{color:#f8fafc;font-size:1.02rem;margin-bottom:0.35rem}
+    .product-card p{color:#9fb0c9;font-size:0.9rem;margin-bottom:0.6rem}
+    .product-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem}
+    .price{font-weight:700}
+    .tag-list{display:flex;gap:0.4rem;flex-wrap:wrap}
+    .tag-list span{background:rgba(255,255,255,0.03);padding:0.28rem 0.48rem;border-radius:999px;font-size:0.78rem;color:#c7d2fe}
+    .product-button{display:inline-block;padding:0.5rem 0.9rem;border-radius:999px;background:linear-gradient(90deg,#5b66f1,#7b5ef0);color:#fff;text-decoration:none;font-weight:700}
+    .variant-row{margin:0.45rem 0 0.6rem;padding:0.45rem 0.55rem;border-radius:12px;transition:background 0.2s ease}
+    .variant-row:focus-within{background:#000}
+    .variant-select{width:100%;background:#000;color:#fff;padding:0.45rem 0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.08)}
+    .variant-select option{background:#000;color:#fff}
+    .variant-select option:focus{background:#111;color:#fff}
+
+    .details{margin-top:1.4rem;display:grid;gap:0.8rem}
+    .detail-card{background:rgba(12,18,30,0.86);padding:0.9rem;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+
+    @media (max-width:760px){.product-image{min-height:90px}.hero{padding:1rem}.category-menu{gap:0.4rem}}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Computer Gear</div>
+      <a class="link-back" href="portfolio.html">Back</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Premium Computer Gear Store</h1>
+      <p>Browse curated computer parts and accessories — laptops, monitors, mice, keyboards, RAM, storage, motherboards, CPUs and more.</p>
+      <div class="chip">Curated Tech</div>
+    </section>
+
+    <div class="category-menu" id="categoryMenu" role="toolbar" aria-label="Categories">
+      <button class="category-button active" data-category="all">All</button>
+      <button class="category-button" data-category="laptops">Laptops</button>
+      <button class="category-button" data-category="monitors">Monitors</button>
+      <button class="category-button" data-category="mouse">Mouse</button>
+      <button class="category-button" data-category="keyboards">Keyboards</button>
+      <button class="category-button" data-category="rams">RAM</button>
+      <button class="category-button" data-category="storage">Storage (SSD / M.2 / HDD)</button>
+      <button class="category-button" data-category="motherboards">Motherboards</button>
+      <button class="category-button" data-category="processors">Processors</button>
+      <button class="category-button" data-category="gpus">GPUs</button>
+      <button class="category-button" data-category="psu">Power Supplies</button>
+      <button class="category-button" data-category="cases">Cases</button>
+      <button class="category-button" data-category="cooling">Cooling</button>
+      <button class="category-button" data-category="networking">Networking</button>
+      <button class="category-button" data-category="accessories">Accessories</button>
+    </div>
+
+    <section class="product-grid" id="products">
+      <article class="product-card" data-category="laptops">
+        <div class="product-image"><img src="razer.jpg" alt="Razer Blade 16"></div>
+        <h3>Razer Blade 16</h3>
+        <p>RTX 4080, 32GB RAM, 1TB NVMe — extreme performance.</p>
+        <div class="variant-row">
+          <label class="sr-only">Choose variant</label>
+          <select class="variant-select" aria-label="Razer Blade 16 variants">
+            <option data-price="2299">RTX 4080 / 32GB / 1TB — $2,299</option>
+            <option data-price="2599">RTX 4090 / 32GB / 1TB — $2,599</option>
+            <option data-price="2899">RTX 4090 / 64GB / 2TB — $2,899</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$2,299</span><div class="tag-list"><span>RTX 4080</span></div></div>
+        <div class="tag-list"><span>16"</span><span>32GB</span><span>1TB NVMe</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="monitors">
+        <div class="product-image"><img src="LG.jpg" alt="LG 34GP83"></div>
+        <h3>LG 34GP83-B (34" UltraWide)</h3>
+        <p>34" 1440p 144Hz with HDR — great for work and play.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="LG ultrawide variants">
+            <option data-price="499">34" QHD 160Hz — $499</option>
+            <option data-price="649">34" QHD 240Hz — $649</option>
+            <option data-price="799">38" Curved 144Hz — $799</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$499</span><div class="tag-list"><span>144Hz</span></div></div>
+        <div class="tag-list"><span>34"</span><span>1440p</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="mouse">
+        <div class="product-image"><img src="logitech.jpg" alt="Logitech G Pro Wireless"></div>
+        <h3>Logitech G Pro X Superlight</h3>
+        <p>Wireless, light, and precise — 10k DPI sensor.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Logitech Pro X Superlight variants">
+            <option data-price="79">Superlight White — $79</option>
+            <option data-price="99">Superlight Black — $99</option>
+            <option data-price="129">Superlight Pro — $129</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$79</span><div class="tag-list"><span>Wireless</span></div></div>
+        <div class="tag-list"><span>RGB</span><span>Ergonomic</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="keyboards">
+        <div class="product-image"><img src="Corsair.jpg" alt="Corsair K70 RGB"></div>
+        <h3>Corsair K70 RGB MK.2</h3>
+        <p>Hot-swap switches, PBT caps, and a premium aluminum frame.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Corsair K70 RGB MK.2 variants">
+            <option data-price="129">Cherry MX Red — $129</option>
+            <option data-price="149">Cherry MX Brown — $149</option>
+            <option data-price="199">Opto-Mechanical — $199</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$129</span><div class="tag-list"><span>RGB</span></div></div>
+        <div class="tag-list"><span>Hot-swap</span><span>USB-C</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="rams">
+        <div class="product-image"><img src="G.SKILL.jpg" alt="G.SKILL Trident Z5 32GB"></div>
+        <h3>G.SKILL Trident Z5 RGB 32GB (2x16GB)</h3>
+        <p>High-speed DDR5 kit for modern platforms (6000 MHz).</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="G.SKILL Trident Z5 variants">
+            <option data-price="189">32GB 6000MHz CL30 — $189</option>
+            <option data-price="249">64GB 6400MHz CL32 — $249</option>
+            <option data-price="159">16GB 5600MHz CL30 — $159</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$189</span><div class="tag-list"><span>DDR5</span></div></div>
+        <div class="tag-list"><span>32GB</span><span>6000MHz</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="storage">
+        <div class="product-image"><img src="samsung1t.jpg" alt="Samsung 980 Pro 2TB"></div>
+        <h3>Samsung 980 Pro 2TB (NVMe M.2)</h3>
+        <p>PCIe 4.0 NVMe for blistering read/write speeds.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Samsung 980 Pro variants">
+            <option data-price="169">2TB PCIe 4.0 NVMe — $169</option>
+            <option data-price="99">1TB PCIe 4.0 NVMe — $99</option>
+            <option data-price="289">4TB PCIe 4.0 NVMe — $289</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$169</span><div class="tag-list"><span>M.2</span></div></div>
+        <div class="tag-list"><span>2TB</span><span>PCIe4</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="motherboards">
+        <div class="product-image"><img src="ASUSHero.jpg" alt="ASUS ROG Maximus Z790"></div>
+        <h3>ASUS ROG Maximus Z790 Hero</h3>
+        <p>High-performance motherboard with PCIe 5.0 and multiple M.2 slots.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="ASUS ROG Maximus Z790 variants">
+            <option data-price="329">Z790 Hero — $329</option>
+            <option data-price="259">Z790-E — $259</option>
+            <option data-price="179">B760 WiFi — $179</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$329</span><div class="tag-list"><span>ATX</span></div></div>
+        <div class="tag-list"><span>PCIe5</span><span>WiFi6E</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="processors">
+        <div class="product-image"><img src="Ryzen7950X.jpg" alt="Ryzen 9 7950X"></div>
+        <h3>AMD Ryzen 9 7950X</h3>
+        <p>16 cores, ideal for creators and heavy multitasking.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="AMD Ryzen 9 variants">
+            <option data-price="649">Ryzen 9 7950X — $649</option>
+            <option data-price="499">Ryzen 9 7900X — $499</option>
+            <option data-price="299">Ryzen 5 7600X — $299</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$649</span><div class="tag-list"><span>16c/32t</span></div></div>
+        <div class="tag-list"><span>AM5</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="gpus">
+        <div class="product-image"><img src="NVIDIA_RTX_4090.jpg" alt="NVIDIA GeForce RTX 4090"></div>
+        <h3>NVIDIA GeForce RTX 4090 Founders Edition</h3>
+        <p>Top-tier GPU for 4K gaming and creative workloads.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="RTX 40 series variants">
+            <option data-price="1699">RTX 4090 FE — $1,699</option>
+            <option data-price="1199">RTX 4080 — $1,199</option>
+            <option data-price="799">RTX 4070 Ti — $799</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$1,699</span><div class="tag-list"><span>24GB</span></div></div>
+        <div class="tag-list"><span>Ray Tracing</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Additional Laptops -->
+      <article class="product-card" data-category="laptops">
+        <div class="product-image"><img src="Dell.jpg" alt="Dell XPS 13 Plus"></div>
+        <h3>Dell XPS 13 Plus</h3>
+        <p>Lightweight 13" with OLED, 32GB RAM and 1TB SSD.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Dell XPS 13 Plus variants">
+            <option data-price="1599">i7 / 16GB / 512GB — $1,599</option>
+            <option data-price="1799">i7 / 32GB / 1TB — $1,799</option>
+            <option data-price="1999">i7 / 32GB / 2TB — $1,999</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$1,599</span><div class="tag-list"><span>OLED</span></div></div>
+        <div class="tag-list"><span>14"</span><span>32GB</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="laptops">
+        <div class="product-image"><img src="ASUS_ROG_Zephyrus_M16.jpg" alt="ASUS ROG Zephyrus M16"></div>
+        <h3>ASUS ROG Zephyrus M16</h3>
+        <p>16" Creator laptop with color-accurate screen and RTX GPU.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="ASUS ROG Zephyrus M16 variants">
+            <option data-price="2199">RTX 4070 / 32GB / 1TB — $2,199</option>
+            <option data-price="2499">RTX 4080 / 32GB / 1TB — $2,499</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$2,199</span><div class="tag-list"><span>Color-Accurate</span></div></div>
+        <div class="tag-list"><span>16"</span><span>Creator</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="laptops">
+        <div class="product-image"><img src="Acer_Aspire_5.jpg" alt="Acer Aspire 5"></div>
+        <h3>Acer Aspire 5 (15")</h3>
+        <p>Everyday 15" laptop for productivity and light gaming.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Acer Aspire 5 variants">
+            <option data-price="499">Ryzen 5 / 8GB / 512GB — $499</option>
+            <option data-price="599">Ryzen 7 / 16GB / 512GB — $599</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$499</span><div class="tag-list"><span>Value</span></div></div>
+        <div class="tag-list"><span>15"</span><span>Integrated GPU</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Additional Monitors -->
+      <article class="product-card" data-category="monitors">
+        <div class="product-image"><img src="asusPG27AQDM_3_large.jpg" alt="ASUS ROG Swift PG259QN"></div>
+        <h3>ASUS ROG Swift PG259QN (27" 240Hz)</h3>
+        <p>High refresh 27" 1080p 240Hz for competitive gaming.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="ASUS ROG Swift PG259QN variants">
+            <option data-price="329">360Hz 1080p — $329</option>
+            <option data-price="429">240Hz 1080p — $429</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$329</span><div class="tag-list"><span>240Hz</span></div></div>
+        <div class="tag-list"><span>27"</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="monitors">
+        <div class="product-image"><img src="dell_ultrasharp_27_inch_4k_u2720q_2_1677256888.jpg" alt="Dell UltraSharp U2720Q"></div>
+        <h3>Dell UltraSharp U2720Q (27" 4K)</h3>
+        <p>27" 4K IPS with excellent color and factory calibration.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Dell UltraSharp variants">
+            <option data-price="599">4K USB-C — $599</option>
+            <option data-price="799">4K PremierColor — $799</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$599</span><div class="tag-list"><span>4K</span></div></div>
+        <div class="tag-list"><span>IPS</span></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="monitors">
+        <div class="product-image"><img src="HP_24mh.jpg" alt="HP 24mh"></div>
+        <h3>HP 24mh (24" 1080p)</h3>
+        <p>Reliable 24" panel for office and home use.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="HP 24mh variants">
+            <option data-price="129">24" 1080p IPS — $129</option>
+            <option data-price="179">24" 1080p IPS + speakers — $179</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$129</span><div class="tag-list"><span>1080p</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Mice -->
+      <article class="product-card" data-category="mouse">
+        <div class="product-image"><img src="Glorious_Model.jpg" alt="Glorious Model O"></div>
+        <h3>Glorious Model O</h3>
+        <p>Symmetrical design, great for left and right hand users.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Glorious Model O variants">
+            <option data-price="59">Matte White — $59</option>
+            <option data-price="69">Glossy Black — $69</option>
+            <option data-price="89">Wireless — $89</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$59</span><div class="tag-list"><span>Ambidextrous</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="mouse">
+        <div class="product-image"><img src="Corsair_Scimitar_RGB_Elite.jpg" alt="Corsair Scimitar RGB Elite"></div>
+        <h3>Corsair Scimitar RGB Elite</h3>
+        <p>Extra buttons and profiles for MMO and productivity.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Corsair Scimitar variants">
+            <option data-price="99">12-button — $99</option>
+            <option data-price="129">18-button — $129</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$99</span><div class="tag-list"><span>Macro</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="mouse">
+        <div class="product-image"><img src="logitech-m90.jpg" alt="Logitech M90"></div>
+        <h3>Logitech M90</h3>
+        <p>Affordable wired mouse for everyday use.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Logitech M90 variants">
+            <option data-price="19">Wired — $19</option>
+            <option data-price="29">Wireless imitation — $29</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$19</span><div class="tag-list"><span>Value</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Keyboards -->
+      <article class="product-card" data-category="keyboards">
+        <div class="product-image"><img src="Keychron_K6.jpg" alt="Keychron K6"></div>
+        <h3>Keychron K6 (60%)</h3>
+        <p>Minimal layout for desk space saving — hot-swap ready.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Keychron K6 variants">
+            <option data-price="109">Gateron Red — $109</option>
+            <option data-price="159">Hot-swap Kit — $159</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$109</span><div class="tag-list"><span>Compact</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="keyboards">
+        <div class="product-image"><img src="Keychron_K8_Wireless.jpg" alt="Keychron K8"></div>
+        <h3>Keychron K8 Wireless</h3>
+        <p>Low-latency wireless with hot-swap switches and RGB.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Keychron K8 variants">
+            <option data-price="199">Hot-swap Wireless — $199</option>
+            <option data-price="249">Hot-swap RGB — $249</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$199</span><div class="tag-list"><span>Wireless</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- RAM options -->
+      <article class="product-card" data-category="rams">
+        <div class="product-image"><img src="Corsair_Dominator.jpg" alt="Corsair Dominator Platinum 64GB"></div>
+        <h3>Corsair Dominator Platinum RGB 64GB (2x32GB)</h3>
+        <p>2x32GB high-capacity DDR5 kit for heavy workloads.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Corsair Dominator Platinum variants">
+            <option data-price="249">64GB 6000MHz — $249</option>
+            <option data-price="319">64GB 6400MHz RGB — $319</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$249</span><div class="tag-list"><span>64GB</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="rams">
+        <div class="product-image"><img src="Corsair_Vengeance.jpg" alt="Corsair Vengeance LPX 16GB"></div>
+        <h3>Corsair Vengeance LPX 16GB (2x8GB)</h3>
+        <p>Reliable DDR4 kit for legacy builds.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Corsair Vengeance LPX variants">
+            <option data-price="69">16GB DDR4-3200 — $69</option>
+            <option data-price="119">32GB DDR4-3200 — $119</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$69</span><div class="tag-list"><span>DDR4</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Storage options -->
+      <article class="product-card" data-category="storage">
+        <div class="product-image"><img src="Crucial_MX500.jpg" alt="Crucial MX500 1TB"></div>
+        <h3>Crucial MX500 1TB (SATA SSD)</h3>
+        <p>Affordable SATA SSD for mass storage and OS installs.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Crucial MX500 variants">
+            <option data-price="59">1TB SATA SSD — $59</option>
+            <option data-price="99">2TB SATA SSD — $99</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$59</span><div class="tag-list"><span>SATA</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="storage">
+        <div class="product-image"><img src="Seagate_Barracuda.jpg" alt="Seagate Barracuda 4TB"></div>
+        <h3>Seagate Barracuda 4TB</h3>
+        <p>High-capacity HDD for backups and media libraries.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Seagate Barracuda variants">
+            <option data-price="89">4TB HDD — $89</option>
+            <option data-price="129">8TB HDD — $129</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$89</span><div class="tag-list"><span>HDD</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Motherboards -->
+      <article class="product-card" data-category="motherboards">
+        <div class="product-image"><img src="ASRock_X670E.jpg" alt="ASRock X670E Phantom Gaming-ITX"></div>
+        <h3>ASRock X670E Phantom Gaming-ITX</h3>
+        <p>High-end ITX board for compact AM5 builds.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="ASRock X670E Phantom variants">
+            <option data-price="299">X670 ITX — $299</option>
+            <option data-price="349">X670E ITX — $349</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$299</span><div class="tag-list"><span>ITX</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="motherboards">
+        <div class="product-image"><img src="MSI_B550M.jpg" alt="MSI B550M PRO-VDH"></div>
+        <h3>MSI B550M PRO-VDH</h3>
+        <p>Solid MicroATX board for mid-range AMD builds.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="MSI B550 variants">
+            <option data-price="139">B550M MicroATX — $139</option>
+            <option data-price="179">B550 ATX — $179</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$139</span><div class="tag-list"><span>B550</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Processors -->
+      <article class="product-card" data-category="processors">
+        <div class="product-image"><img src="Intel_Core_i9-13900K.jpg" alt="Intel Core i9-13900K"></div>
+        <h3>Intel Core i9-13900K</h3>
+        <p>High-clock performance for gaming and creation.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Intel Core i9 variants">
+            <option data-price="589">Core i9-13900K — $589</option>
+            <option data-price="399">Core i7-13700K — $399</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$589</span><div class="tag-list"><span>Intel</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="processors">
+        <div class="product-image"><img src="AMD_Ryzen_7_7700X.jpg" alt="Ryzen 7 7700X"></div>
+        <h3>AMD Ryzen 7 7700X</h3>
+        <p>8-core high-performance CPU for gaming and streaming.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="AMD Ryzen 7 variants">
+            <option data-price="349">Ryzen 7 7700X — $349</option>
+            <option data-price="279">Ryzen 5 7600X — $279</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$349</span><div class="tag-list"><span>AM5</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- GPUs additional -->
+      <article class="product-card" data-category="gpus">
+        <div class="product-image"><img src="AMD_Radeon_RX_7900_XTX.jpg" alt="Radeon RX 7900 XTX"></div>
+        <h3>AMD Radeon RX 7900 XTX</h3>
+        <p>High-performance AMD GPU for rasterization and compute.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="AMD Radeon RX variants">
+            <option data-price="999">RX 7900 XTX — $999</option>
+            <option data-price="699">RX 7800 XT — $699</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$999</span><div class="tag-list"><span>24GB</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Power Supplies -->
+      <article class="product-card" data-category="psu">
+        <div class="product-image"><img src="Corsair_RM850x.jpg" alt="Corsair RM850x"></div>
+        <h3>Corsair RM850x (850W, 80+ Gold)</h3>
+        <p>Efficient and reliable modular power supply.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Corsair RM850x variants">
+            <option data-price="129">850W 80+ Gold — $129</option>
+            <option data-price="169">1000W 80+ Gold — $169</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$129</span><div class="tag-list"><span>80+ Gold</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Cases -->
+      <article class="product-card" data-category="cases">
+        <div class="product-image"><img src="Phanteks_Eclipse_P400A.jpg" alt="Phanteks P400A"></div>
+        <h3>Phanteks Eclipse P400A</h3>
+        <p>High-airflow mid-tower with tempered glass side panel.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Phanteks P400A variants">
+            <option data-price="99">Airflow Mesh — $99</option>
+            <option data-price="159">RGB Tempered Glass — $159</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$99</span><div class="tag-list"><span>Airflow</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Cooling -->
+      <article class="product-card" data-category="cooling">
+        <div class="product-image"><img src="Corsair_iCUE_H100i.jpg" alt="Corsair iCUE H100i"></div>
+        <h3>Corsair iCUE H100i (240mm)</h3>
+        <p>All-in-one liquid cooler with RGB pump and quiet fans.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Corsair iCUE H100i variants">
+            <option data-price="89">240mm RGB AIO — $89</option>
+            <option data-price="129">360mm RGB AIO — $129</option>
+            <option data-price="59">Air Cooler — $59</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$89</span><div class="tag-list"><span>Liquid</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Networking -->
+      <article class="product-card" data-category="networking">
+        <div class="product-image"><img src="ASUS_ROG_Rapture_GT-AX11000.jpg" alt="ASUS ROG Rapture GT-AX11000"></div>
+        <h3>ASUS ROG Rapture GT-AX11000</h3>
+        <p>High-speed tri-band WiFi 6 router for home networks.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="ASUS GT-AX11000 variants">
+            <option data-price="149">WiFi 6 — $149</option>
+            <option data-price="249">WiFi 6E — $249</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$149</span><div class="tag-list"><span>Router</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <!-- Accessories -->
+      <article class="product-card" data-category="accessories">
+        <div class="product-image"><img src="SteelSeries_Arctis.jpg" alt="SteelSeries Arctis 7"></div>
+        <h3>SteelSeries Arctis 7</h3>
+        <p>Comfortable headset with surround sound and detachable mic.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="SteelSeries Arctis 7 variants">
+            <option data-price="89">Wired Edition — $89</option>
+            <option data-price="129">Wireless Edition — $129</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$89</span><div class="tag-list"><span>Surround</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+      <article class="product-card" data-category="accessories">
+        <div class="product-image"><img src="Corsair_LL120_RGB.jpg" alt="Corsair LL120 RGB"></div>
+        <h3>Corsair LL120 RGB (3-pack)</h3>
+        <p>Quiet RGB fans with controller and PWM support.</p>
+        <div class="variant-row">
+          <select class="variant-select" aria-label="Corsair LL120 variants">
+            <option data-price="39">3-pack RGB — $39</option>
+            <option data-price="69">6-pack RGB — $69</option>
+          </select>
+        </div>
+        <div class="product-meta"><span class="price">$39</span><div class="tag-list"><span>RGB</span></div></div>
+        <a class="product-button" href="#details">View Details</a>
+      </article>
+
+
+    </section>
+
+    <div class="details" id="details">
+      <article class="detail-card">
+        <h2>Project Overview</h2>
+        <p>A refined storefront showcasing product discovery, filters, and clear purchase CTAs.</p>
+      </article>
+      <article class="detail-card">
+        <h2>Key Features</h2>
+        <p>Responsive grid, category menu, product metadata, and quick actions.</p>
+      </article>
+    </div>
+
+  </main>
+
+  <script>
+    (function(){
+      const buttons = document.querySelectorAll('.category-button');
+      const cards = document.querySelectorAll('.product-card');
+      function setActive(btn){ buttons.forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
+      function filter(cat){ cards.forEach(card=>{ if(cat==='all'){ card.style.display=''; return } const c=card.dataset.category||''; card.style.display = (c===cat) ? '' : 'none'; }) }
+      buttons.forEach(b=> b.addEventListener('click', ()=>{ setActive(b); filter(b.dataset.category); window.location.hash='products'; }));
+
+      // Variant handling: update displayed price when variant changes
+      function bindVariants(){
+        document.querySelectorAll('.product-card').forEach(card=>{
+          const select = card.querySelector('.variant-select');
+          const priceEl = card.querySelector('.price');
+          if(!select || !priceEl) return;
+          function update(){
+            const opt = select.selectedOptions[0];
+            const p = opt && opt.dataset && opt.dataset.price ? Number(opt.dataset.price) : null;
+            if(p!==null && !Number.isNaN(p)) priceEl.textContent = '$' + p.toLocaleString();
+          }
+          select.addEventListener('change', update);
+          update();
+        });
+      }
+
+      bindVariants();
+
+      // Improve images: lazy-load, fallback on error, and ensure .jpg variants
+      document.querySelectorAll('.product-image img').forEach(img=>{
+        try{ img.loading = 'lazy'; }catch(e){}
+        // convert placeholder .png to .jpg for consistent extension
+        try{
+          if(img.src && img.src.indexOf('.png?text=') !== -1) img.src = img.src.replace('.png?text=', '.jpg?text=');
+          else if(img.src && img.src.endsWith('.png')) img.src = img.src.replace(/\.png$/, '.jpg');
+        }catch(e){}
+        img.addEventListener('error', ()=>{ img.src = 'https://via.placeholder.com/400x200.jpg?text=No+Image'; });
+      });
+    })();
+  </script>
+
+</body>
+</html>
