@@ -1,0 +1,1013 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maffrick Cerna | Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg: #081026;
+            --text: #e2e8f0;
+            --card: #0f1724;
+            --muted: #94a3b8;
+            --accent-start: #4f5fd6;
+            --accent-end: #6b4dd6;
+            --header-text: #ffffff;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.18), transparent 24%),
+                        radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.14), transparent 18%),
+                        linear-gradient(180deg, #040912 0%, #081026 100%);
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.18), transparent 20%),
+                              radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.14), transparent 14%),
+                              radial-gradient(circle at 55% 78%, rgba(16, 185, 129, 0.1), transparent 12%);
+            filter: blur(0.5px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            inset: 0 auto auto 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.76);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.12);
+        }
+
+        .dark header {
+            background: rgba(10, 18, 40, 0.88);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent-end);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 1.4rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.25s ease;
+        }
+
+        .dark nav a {
+            color: #e2e8f0;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: var(--accent-end);
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.35rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            color: white;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 18px 45px rgba(102, 126, 234, 0.18);
+        }
+
+        .dark .nav-button {
+            box-shadow: 0 20px 55px rgba(60, 81, 194, 0.25);
+        }
+
+        .dark-mode-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.15);
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+
+        .slider:before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            transition: transform 0.25s ease;
+        }
+
+        .switch input:checked + .slider {
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            border-color: transparent;
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        main {
+            margin-top: 90px;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 5rem 2rem 4rem;
+            min-height: calc(100vh - 90px);
+            display: grid;
+            place-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            top: -70px;
+            left: -60px;
+            filter: blur(45px);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            bottom: -60px;
+            right: -40px;
+            filter: blur(35px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .hero-text {
+            text-align: left;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            max-width: 760px;
+            text-shadow: 0 26px 80px rgba(0, 0, 0, 0.18);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.9s ease;
+        }
+
+        .hero-text p {
+            max-width: 680px;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 1.08rem;
+            line-height: 1.9;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.9s ease 0.15s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .cta-button,
+        .secondary-button {
+            padding: 0.95rem 2rem;
+            border-radius: 999px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+        }
+
+        .cta-button {
+            background: white;
+            color: #4338ca;
+            box-shadow: 0 20px 45px rgba(92, 95, 229, 0.18);
+        }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+
+        .cta-button:hover,
+        .secondary-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.98;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 40px;
+            object-fit: cover;
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.22);
+            animation: fadeInUp 0.9s ease 0.25s both, float 5s ease-in-out infinite;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 28px;
+            box-shadow: 0 24px 80px rgba(102, 126, 234, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.08);
+        }
+
+        .dark .section-alt {
+            background: rgba(15, 23, 42, 0.92);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 3.4vw, 2.8rem);
+            margin-bottom: 0.85rem;
+            text-align: center;
+            position: relative;
+            color: var(--text);
+            padding-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            max-width: 720px;
+            margin: 0 auto 2.2rem;
+            color: var(--muted);
+            font-size: 1rem;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            border-radius: 999px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 1.4rem;
+            color: #475569;
+            font-size: 1.05rem;
+            line-height: 1.85;
+        }
+
+        .personal-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            border-left: 4px solid var(--accent-start);
+            box-shadow: 0 18px 50px rgba(102, 126, 234, 0.12);
+        }
+
+        .dark .personal-info {
+            background: #111827;
+        }
+
+        .personal-info h3 {
+            margin-bottom: 1.4rem;
+            color: var(--accent-end);
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.12);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: var(--accent-start);
+            font-size: 0.92rem;
+        }
+
+        .info-value {
+            margin-top: 0.25rem;
+            color: var(--text);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 55px rgba(102, 126, 234, 0.12);
+        }
+
+        .dark .skill-category {
+            background: #111827;
+        }
+
+        .skill-category h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-end);
+            font-size: 1.3rem;
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .skill-level {
+            color: var(--accent-end);
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e5e7f0;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            border-radius: 999px;
+            transition: width 0.5s ease;
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .hobby-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f7f8ff 100%);
+            padding: 2rem;
+            border-radius: 22px;
+            text-align: center;
+            box-shadow: 0 24px 65px rgba(102, 126, 234, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.08);
+        }
+
+        .dark .hobby-card {
+            background: #0f1724;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 28px 70px rgba(102, 126, 234, 0.18);
+        }
+
+        .hobby-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hobby-card h3 {
+            margin-bottom: 0.6rem;
+            color: var(--text);
+        }
+
+        .hobby-card p {
+            color: #51566d;
+            font-size: 0.96rem;
+            line-height: 1.7;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 26px;
+            overflow: hidden;
+            box-shadow: 0 20px 70px rgba(15, 23, 42, 0.09);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.12);
+        }
+
+        .project-card-link {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .project-card-link:hover .project-header,
+        .project-card-link:hover .project-content h3 {
+            color: #ffffff;
+        }
+
+        .project-card-link:hover .project-header {
+            background: linear-gradient(135deg, #4f5fd6, #6b4dd6);
+        }
+
+        .project-card-link:hover .project-content {
+            transform: translateY(-2px);
+        }
+
+        .dark .project-card {
+            background: #0f1724;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 85px rgba(102, 126, 234, 0.18);
+        }
+
+        .project-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            min-height: 130px;
+            display: grid;
+            place-items: center;
+        }
+
+        .project-content {
+            padding: 1.75rem;
+        }
+
+        .project-content h3 {
+            margin-bottom: 0.75rem;
+            color: var(--text);
+            font-size: 1.12rem;
+        }
+
+        .project-content p {
+            color: #475569;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.12);
+            color: #334a91;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .goals-content {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.8rem;
+        }
+
+        .goal-item {
+            background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+            padding: 1.9rem;
+            border-radius: 24px;
+            border-left: 4px solid var(--accent-start);
+            box-shadow: 0 22px 65px rgba(102, 126, 234, 0.11);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .dark .goal-item {
+            background: #111827;
+        }
+
+        .goal-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 28px 70px rgba(102, 126, 234, 0.16);
+        }
+
+        .goal-item h3 {
+            color: var(--accent-end);
+            margin-bottom: 0.65rem;
+            font-size: 1.1rem;
+        }
+
+        .goal-item p {
+            color: #475569;
+            font-size: 0.96rem;
+            line-height: 1.85;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: white;
+            text-align: center;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact .section-title::after {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.4rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contact-link {
+            background: rgba(255, 255, 255, 0.14);
+            padding: 1.2rem 1.3rem;
+            border-radius: 18px;
+            min-width: 220px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 26px 60px rgba(0, 0, 0, 0.16);
+        }
+
+        .contact-link a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        footer {
+            background: #1f2937;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .about-grid,
+            .skills-container,
+            .goals-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: 6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.2rem;
+            }
+
+            .hero {
+                padding: 4rem 1.2rem 3rem;
+            }
+
+            section {
+                padding: 3rem 1.2rem;
+            }
+
+            nav ul {
+                gap: 0.9rem;
+                font-size: 0.85rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Maffrick Cerna</div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#hobbies">Hobbies</a></li>
+                <li><a href="#goals">Goals</a></li>
+                <li><a href="#contact" class="nav-button">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="about">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Building my IT career through design, code, and consistent learning.</h1>
+                    <p><span id="typed"></span></p>
+                    <div class="hero-actions">
+                        <a href="#about-me" class="cta-button">Discover My Story</a>
+                        <a href="#projects" class="secondary-button">See Projects</a>
+                    </div>
+                </div>
+                <img src="pic.jpg" alt="Profile Picture" class="hero-image reveal">
+            </div>
+        </section>
+
+        <section class="section-alt reveal" id="about-me">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">I’m a first-year IT student learning development, design, and problem solving while creating stronger technical habits every day.</p>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>I am a first-year Information Technology student at Universidad de Zamboanga. I enjoy understanding how software and systems work, and I’m focused on building solid technical fundamentals.</p>
+                    <p>With every project and lesson, I improve my ability to plan, code, and solve problems. I’m learning to take ideas from concept to a working webpage while keeping my learning path clear and consistent.</p>
+                </div>
+                <div class="personal-info">
+                    <h3>Personal Information</h3>
+                    <div class="info-item">
+                        <div class="info-label">📍 School</div>
+                        <div class="info-value">Universidad De Zamboanga</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🎓 Education</div>
+                        <div class="info-value">First Year, Information Technology</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">📧 Email</div>
+                        <div class="info-value">maffrick.cerna@one.uz.edu.ph</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">🌍 Languages</div>
+                        <div class="info-value">Tagalog, English, Bisaya</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">⚡ Focus Area</div>
+                        <div class="info-value">Web Development & Backend Learning</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="reveal">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <p class="section-subtitle">The skills I’m developing now to become a strong software builder and team contributor.</p>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Development</h3>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>HTML / CSS</span><span class="skill-level">Intermediate</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 85%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>JavaScript</span><span class="skill-level">Learning</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 70%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>Responsive Layouts</span><span class="skill-level">Growing</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 78%"></div></div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Mindset</h3>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>Problem Solving</span><span class="skill-level">Developing</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 80%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>Teamwork</span><span class="skill-level">Growing</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name"><span>Learning Workflow</span><span class="skill-level">Strong</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 88%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hobbies" class="reveal">
+            <h2 class="section-title">My Hobbies</h2>
+            <p class="section-subtitle">What keeps me motivated, creative, and energized outside of class.</p>
+            <div class="hobbies-grid">
+                <div class="hobby-card">
+                    <div class="hobby-icon">💻</div>
+                    <h3>Coding</h3>
+                    <p>Exploring web technologies and practicing interactive pages every day.</p>
+                </div>
+                <div class="hobby-card">
+                    <div class="hobby-icon">🎮</div>
+                    <h3>Gaming</h3>
+                    <p>Enjoying strategy titles like Valorant and Ragnarok while sharpening focus.</p>
+                </div>
+                <div class="hobby-card">
+                    <div class="hobby-icon">📚</div>
+                    <h3>Reading</h3>
+                    <p>Learning from tech blogs and study materials to stay up to date.</p>
+                </div>
+                <div class="hobby-card">
+                    <div class="hobby-icon">🎵</div>
+                    <h3>Music</h3>
+                    <p>Using music as a creative boost while coding and studying.</p>
+                </div>
+                <div class="hobby-card">
+                    <div class="hobby-icon">🚴</div>
+                    <h3>Sports</h3>
+                    <p>Cycling, running, and cheer dance help me stay active and balanced.</p>
+                </div>
+                <div class="hobby-card">
+                    <div class="hobby-icon">📸</div>
+                    <h3>Photography</h3>
+                    <p>Capturing moments with creative framing and composition.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-alt reveal" id="projects">
+            <h2 class="section-title">Projects</h2>
+            <p class="section-subtitle">A few examples of the concepts and learning projects I’m building as I grow.</p>
+            <div class="projects-grid">
+                <article class="project-card reveal">
+                    <a class="project-card-link" href="ecommerce-store.html" target="_blank" rel="noopener noreferrer">
+                        <div class="project-header">E-Commerce Store</div>
+                        <div class="project-content">
+                            <h3>Sell products online</h3>
+                            <p>A simple online storefront for selling items with product cards, pricing, and checkout flow.</p>
+                            <div class="project-tags">
+                                <span class="tag">E-commerce</span>
+                                <span class="tag">UI</span>
+                                <span class="tag">Retail</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                <article class="project-card reveal">
+                    <a class="project-card-link" href="marketplace-app.html" target="_blank" rel="noopener noreferrer">
+                        <div class="project-header">Marketplace App</div>
+                        <div class="project-content">
+                            <h3>Buy and sell locally</h3>
+                            <p>A marketplace concept where users can list items, browse offers, and contact sellers for fast deals.</p>
+                            <div class="project-tags">
+                                <span class="tag">Marketplace</span>
+                                <span class="tag">Listings</span>
+                                <span class="tag">Community</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                <article class="project-card reveal">
+                    <a class="project-card-link" href="product-catalog.html" target="_blank" rel="noopener noreferrer">
+                        <div class="project-header">Product Catalog</div>
+                        <div class="project-content">
+                            <h3>Selling made easy</h3>
+                            <p>An interactive product catalog that highlights top items, featured deals, and customer favorites.</p>
+                            <div class="project-tags">
+                                <span class="tag">Catalog</span>
+                                <span class="tag">Shop</span>
+                                <span class="tag">Display</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-alt reveal" id="goals">
+            <h2 class="section-title">My Goals</h2>
+            <p class="section-subtitle">A clear roadmap for the skills and outcomes I’m building toward.</p>
+            <div class="goals-content">
+                <div class="goal-item reveal">
+                    <h3>📚 Short Term</h3>
+                    <p>Complete first-year coursework, practice coding consistently, and build web projects that show progress.</p>
+                </div>
+                <div class="goal-item reveal">
+                    <h3>🎯 Long Term</h3>
+                    <p>Become a reliable developer who can work on real products, collaborate with teams, and build practical solutions.</p>
+                </div>
+                <div class="goal-item reveal">
+                    <h3>💡 Personal Growth</h3>
+                    <p>Improve problem solving, communication, and confidence through steady practice and learning.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact reveal" id="contact">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-links">
+                <div class="contact-link">
+                    <strong>📧 Email</strong><br>
+                    <a href="mailto:maffrick.cerna@one.uz.edu.ph">maffrick.cerna@one.uz.edu.ph</a>
+                </div>
+                <div class="contact-link">
+                    <strong>🌐 Facebook</strong><br>
+                    <a href="https://facebook.com/maffrick.cerna.3" target="_blank" rel="noopener">facebook.com/maffrick.cerna.3</a>
+                </div>
+                <div class="contact-link">
+                    <strong>🐙 GitHub</strong><br>
+                    <a href="https://github.com/maffrickcerna-spec" target="_blank" rel="noopener">github.com/maffrickcerna-spec</a>
+                </div>
+            </div>
+            <p>Feel free to reach out — I’m always happy to connect and keep learning from new experiences.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Maffrick Cerna. Constantly Learning & Growing.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const typedText = "Passionate about learning web development and exploring new technologies. Welcome to my personal portfolio where I share my journey, skills, and projects.";
+            const typedEl = document.getElementById('typed');
+            let idx = 0;
+            function typeChar() {
+                if (!typedEl) return;
+                if (idx < typedText.length) {
+                    typedEl.textContent += typedText.charAt(idx);
+                    idx++;
+                    setTimeout(typeChar, 18);
+                }
+            }
+            typeChar();
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            const toggle = document.getElementById('dark-toggle');
+            function setDarkMode(on) {
+                if (on) document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+                try { localStorage.setItem('darkMode', on ? 'on' : 'off'); } catch (e) {}
+                if (toggle) { toggle.checked = !!on; toggle.setAttribute('aria-checked', !!on); }
+            }
+
+            const saved = (function() { try { return localStorage.getItem('darkMode'); } catch (e) { return null; } })();
+            setDarkMode(saved === 'on');
+            if (toggle) toggle.addEventListener('change', function (event) {
+                setDarkMode(event.target.checked);
+            });
+        });
+    </script>
+</body>
+</html>
